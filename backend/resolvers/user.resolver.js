@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 const userResolver = { 
 
     Mutation: {
+        // sign up function
         signUp: async(_, {input}, context) => {
             try {
                 const { username, name, password, gender } = input;
@@ -45,6 +46,7 @@ const userResolver = {
             }
         },
 
+        // login function
         login: async (_, { input }, context) => {
 			try {
 				const { username, password } = input;
@@ -59,6 +61,21 @@ const userResolver = {
 			}
 		},
 
+        // logout function
+        logout: async (_, __, context) => {
+			try {
+				await context.logout();
+				context.req.session.destroy((err) => {
+					if (err) throw err;
+				});
+				context.res.clearCookie("connect.sid");
+
+				return { message: "Logged out successfully" };
+			} catch (err) {
+				console.error("Error in logout:", err);
+				throw new Error(err.message || "Internal server error");
+			}
+		},
     },
 
     Query: {

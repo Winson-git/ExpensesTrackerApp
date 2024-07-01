@@ -206,7 +206,7 @@ const TransactionPage = () => {
 							name='date'
 							id='date'
 							// className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-[11px] px-4 mb-3 leading-tight focus:outline-nonefocus:bg-white'
-              className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 custom-date-input'
+              				className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 custom-date-input'
 							placeholder='Select date'
 							value={formData.date}
 							onChange={handleInputChange}

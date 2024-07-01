@@ -25,6 +25,33 @@ const transactionResolver = {
 				throw new Error("Error getting transaction");
 			}
 		},
+		categoryStatistics: async (_, __, context) => {
+			if (!context.getUser()) throw new Error("Unauthorized");
+
+			const userId = context.getUser()._id;
+			const transactions = await Transaction.find({ userId });
+			const categoryMap = {};
+
+			// const transactions = [
+			// 	{ category: "expense", amount: 50 },
+			// 	{ category: "expense", amount: 75 },
+			// 	{ category: "investment", amount: 100 },
+			// 	{ category: "saving", amount: 30 },
+			// 	{ category: "saving", amount: 20 }
+			// ];
+
+			transactions.forEach((transaction) => {
+				if (!categoryMap[transaction.category]) {
+					categoryMap[transaction.category] = 0;
+				}
+				categoryMap[transaction.category] += transaction.amount;
+			});
+
+			// categoryMap = { expense: 125, investment: 100, saving: 50 }
+
+			return Object.entries(categoryMap).map(([category, totalAmount]) => ({ category, totalAmount }));
+			// return [ { category: "expense", totalAmount: 125 }, { category: "investment", totalAmount: 100 }, { category: "saving", totalAmount: 50 } ]
+		},
 
     },
     
